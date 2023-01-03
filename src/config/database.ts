@@ -1,4 +1,5 @@
 import { DataTypes, Sequelize, Dialect } from "sequelize";
+import tedious from "tedious";
 
 let sequelize: Sequelize;
 const env = process.env.NODE_ENV || 'development';
@@ -35,7 +36,8 @@ if (env === 'production') {
         dialectOptions: {
             encrypt: false,
             trustServerCertificate: true,
-        }
+        },
+        dialectModule: tedious
     });
 } else {
     sequelize = new Sequelize(
@@ -46,7 +48,8 @@ if (env === 'production') {
         dialectOptions: {
             encrypt: false,
             trustServerCertificate: true,
-        }
+        },
+        dialectModule: tedious
     });
 }
 
