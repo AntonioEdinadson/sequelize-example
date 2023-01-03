@@ -1,5 +1,5 @@
-import { DataTypes, Sequelize, Dialect } from "sequelize";
-import tedious from "tedious";
+import { DataTypes, Sequelize } from "sequelize";
+import * as tedious from "tedious";
 
 let sequelize: Sequelize;
 const env = process.env.NODE_ENV || 'development';
@@ -10,19 +10,17 @@ DataTypes.DATE.prototype._stringify = function _stringify(date: any, options: an
 };
 
 const config = {
-    development: {
+    production: {
         username: process.env.DBPROD_USER!,
         password: process.env.DBPROD_PASS!,
         database: process.env.DBPROD_NAME!,
-        host: process.env.DBPROD_HOST!,
-        dialect: "mssql",
+        host: process.env.DBPROD_HOST!
     },
-    production: {
+    development: {
         username: process.env.DBDEV_USER!,
         password: process.env.DBDEV_PASS!,
         database: process.env.DBDEV_NAME!,
-        host: process.env.DBDEV_HOST!,
-        dialect: "mssql",
+        host: process.env.DBDEV_HOST!
     }
 };
 
@@ -31,7 +29,8 @@ if (env === 'production') {
         config.production.database,
         config.production.username,
         config.production.password, {
-        dialect: config.production.dialect as Dialect,
+        host: config.production.host,
+        dialect: "mssql",
         dialectModule: tedious,
         dialectOptions: {
             encrypt: false,
@@ -43,7 +42,8 @@ if (env === 'production') {
         config.development.database,
         config.development.username,
         config.development.password, {
-        dialect: config.development.dialect as Dialect,
+        host: config.development.host,
+        dialect: "mssql",
         dialectModule: tedious,
         dialectOptions: {
             encrypt: false,

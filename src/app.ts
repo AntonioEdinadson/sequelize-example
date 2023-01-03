@@ -1,10 +1,10 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-
 import dotenv from 'dotenv';
-import routes from './routes';
 dotenv.config();
+
+import routes from './routes';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
