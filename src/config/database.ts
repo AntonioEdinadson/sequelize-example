@@ -17,7 +17,6 @@ const config = {
         host: process.env.DBPROD_HOST!,
         dialect: "mssql",
     },
-
     production: {
         username: process.env.DBDEV_USER!,
         password: process.env.DBDEV_PASS!,
@@ -33,11 +32,11 @@ if (env === 'production') {
         config.production.username,
         config.production.password, {
         dialect: config.production.dialect as Dialect,
+        dialectModule: tedious,
         dialectOptions: {
             encrypt: false,
             trustServerCertificate: true,
-        },
-        dialectModule: tedious
+        }
     });
 } else {
     sequelize = new Sequelize(
@@ -45,13 +44,12 @@ if (env === 'production') {
         config.development.username,
         config.development.password, {
         dialect: config.development.dialect as Dialect,
+        dialectModule: tedious,
         dialectOptions: {
             encrypt: false,
             trustServerCertificate: true,
-        },
-        dialectModule: tedious
+        }
     });
 }
-
 
 export default sequelize;
