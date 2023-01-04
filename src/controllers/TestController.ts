@@ -18,8 +18,5 @@ export const get = async (req: Request, res: Response) => {
             code: 500,
             error: error.message
         });
-    } finally {
-        sequelize.close();
     }
-
 };
